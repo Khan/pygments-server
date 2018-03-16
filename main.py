@@ -71,14 +71,13 @@ def pygmentize():
 
 
 def main(port, debug):
-    flask_app.config.update({'DEBUG': debug})
-    flask_app.run(port=port)
+    flask_app.run(port=port, debug=debug)
 
 
 if __name__ == '__main__':
     import argparse
     parser = argparse.ArgumentParser(description="Run a pygments server")
-    parser.add_argument("-p", "--port", default=7878,
+    parser.add_argument("-p", "--port", default=7878, type=int,
                         help="Port to listen for HTTP requests")
     parser.add_argument("-d", "--debug", action='store_true',
                         help="Run flask in debug mode")
@@ -88,3 +87,10 @@ if __name__ == '__main__':
 
     logging.root.setLevel(logging.DEBUG if args.verbose else logging.INFO)
     main(args.port, args.debug)
+else:
+    # Running under gunicorn.  Let's set the flask log level to be the
+    # same as the gunicorn log level.  Taken from
+    # https://medium.com/@trstringer/logging-flask-and-gunicorn-the-manageable-way-2e6f0b8beb2f
+    gunicorn_logger = logging.getLogger('gunicorn.error')
+    flask_app.logger.handlers = gunicorn_logger.handlers
+    flask_app.logger.setLevel(gunicorn_logger.level)
