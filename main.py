@@ -10,6 +10,15 @@ import pygments.util
 flask_app = flask.Flask(__name__)
 
 
+# If running under gunicorn, set the flask log level to be the same as
+# the gunicorn log level.  Based on
+# https://medium.com/@trstringer/logging-flask-and-gunicorn-the-manageable-way-2e6f0b8beb2f
+gunicorn_logger = logging.getLogger('gunicorn.error')
+if gunicorn_logger.handlers:
+    flask_app.logger.handlers = gunicorn_logger.handlers
+    flask_app.logger.setLevel(gunicorn_logger.level)
+
+
 _FORMATTERS = {}
 _LEXERS = {}
 
@@ -87,10 +96,3 @@ if __name__ == '__main__':
 
     logging.root.setLevel(logging.DEBUG if args.verbose else logging.INFO)
     main(args.port, args.debug)
-else:
-    # Running under gunicorn.  Let's set the flask log level to be the
-    # same as the gunicorn log level.  Taken from
-    # https://medium.com/@trstringer/logging-flask-and-gunicorn-the-manageable-way-2e6f0b8beb2f
-    gunicorn_logger = logging.getLogger('gunicorn.error')
-    flask_app.logger.handlers = gunicorn_logger.handlers
-    flask_app.logger.setLevel(gunicorn_logger.level)
