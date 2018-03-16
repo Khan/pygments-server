@@ -10,11 +10,12 @@
 
 url="http://localhost:$PORT/pygmentize?"
 
-while getopts O:f:l: arg; do
+while getopts O:f:l:h arg; do
     case $arg in
         O) url="${url}${OPTARG}&";;
         f) url="${url}formatter=${OPTARG}&";;
         l) url="${url}lang=${OPTARG}&";;
+        h) echo "USAGE: <man pygmentize>"; exit 0;;
         \?) echo "USAGE: <man pygmentize>"; exit 1;;
     esac
 done
