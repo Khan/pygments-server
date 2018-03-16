@@ -7,4 +7,4 @@ serve-production: deps
 	gunicorn --workers=4 --bind=:${PORT} main:flask_app --log-level=error --capture-output
 
 deps:
-	pip install -r requirements.txt
+	pip3 install -r requirements.txt
