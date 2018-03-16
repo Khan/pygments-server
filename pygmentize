@@ -1,0 +1,22 @@
+#!/bin/sh
+
+# A drop-in replacement for pygments's pygmentize, that talks to the
+# pygments server instead.  For right now it only support the
+# -O, -f, and -l flags.  You cannot use `,` with -O, use multiple
+# -O flags instead.
+
+# You can override this with what port the pygments server is on
+: ${PORT:=7878}
+
+url="http://localhost:$PORT/pygmentize?"
+
+while getopts O:f:l: arg; do
+    case $arg in
+        O) url="${url}${OPTARG}&";;
+        f) url="${url}formatter=${OPTARG}&";;
+        l) url="${url}lang=${OPTARG}&";;
+        \?) echo "USAGE: <man pygmentize>"; exit 1;;
+    esac
+done
+
+exec curl --data-binary '@-' -H 'Content-type: text/plain' "$url"
