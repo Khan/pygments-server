@@ -1,0 +1,8 @@
+/opt/logs/pygments-server*.log {
+        daily
+        missingok
+        rotate 14
+        compress
+        notifempty
+        copytruncate
+}
