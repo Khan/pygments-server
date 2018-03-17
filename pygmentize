@@ -20,4 +20,4 @@ while getopts O:f:l:h arg; do
     esac
 done
 
-exec curl --data-binary '@-' -H 'Content-type: text/plain' "$url"
+exec curl -f --data-binary '@-' -H 'Content-type: text/plain' "$url"
