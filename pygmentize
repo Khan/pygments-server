@@ -20,4 +20,8 @@ while getopts O:f:l:h arg; do
     esac
 done
 
+# Do some cheap url-escaping.  Luckily, the only thing we need to
+# escape in practice is `+`, for languages like `html+jinja`.
+url=`echo "$url" | sed 's/\+/%2B/g'`
+
 exec curl -f --data-binary '@-' -H 'Content-type: text/plain' "$url"
