@@ -19,8 +19,14 @@ colorize Phabricator diffs using less CPU, with no other cost.
    server machine.  For the below, I will assume you ran
    `git clone https://github.com/Khan/pygments-server` in `$HOME`.
 
-2. Run `cd ~/pygments-server && make deps` on your Phabricator server
-   machine.
+2. Install the python3 developer files, including pip3.  On Ubuntu you
+   can do this via:
+   ```
+   sudo apt-get install -y python3-dev python-pip3
+   ```
+
+2. Run `cd ~/pygments-server && sudo make deps` on your Phabricator
+   server machine.
 
 3. Start the pygments-server.  The best way to do this is to
    use an init script such as upstart.  You can use
