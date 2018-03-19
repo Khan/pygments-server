@@ -57,11 +57,11 @@ def pygmentize():
     Query parameters:
         lang: the programming language the input is in
         formatter: the formatter to use for output (defaults to "html")
-        style: the style to use for the output (defaults to "colorful")
+        style: the style to use for the output (defaults to "default")
     """
     lang = flask.request.args.get('lang')
     formatter = flask.request.args.get('formatter', 'html')
-    style = flask.request.args.get('style', 'colorful')
+    style = flask.request.args.get('style', 'default')
 
     if not lang:
         raise ClientError('must specify the `lang` parameter')
