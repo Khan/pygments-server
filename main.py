@@ -23,10 +23,11 @@ _FORMATTERS = {}
 _LEXERS = {}
 
 
-def _get_formatter(output_format):
+def _get_formatter(output_format, output_style):
     if output_format not in _FORMATTERS:
         _FORMATTERS[output_format] = pygments.formatters.get_formatter_by_name(
-            output_format, noclasses=True, nowrap=True, encoding='utf-8')
+            output_format, style=output_style,
+            noclasses=True, nowrap=True, encoding='utf-8')
     return _FORMATTERS[output_format]
 
 
@@ -56,15 +57,17 @@ def pygmentize():
     Query parameters:
         lang: the programming language the input is in
         formatter: the formatter to use for output (defaults to "html")
+        style: the style to use for the output (defaults to "colorful")
     """
     lang = flask.request.args.get('lang')
     formatter = flask.request.args.get('formatter', 'html')
+    style = flask.request.args.get('style', 'colorflu')
 
     if not lang:
         raise ClientError('must specify the `lang` parameter')
 
     try:
-        formatter_class = _get_formatter(formatter)
+        formatter_class = _get_formatter(formatter, style)
     except pygments.util.ClassNotFound:
         raise ClientError('Unknown formatter "%s"' % formatter)
 
