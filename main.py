@@ -27,7 +27,7 @@ def _get_formatter(output_format, output_style):
     if output_format not in _FORMATTERS:
         _FORMATTERS[output_format] = pygments.formatters.get_formatter_by_name(
             output_format, style=output_style,
-            noclasses=True, nowrap=True, encoding='utf-8')
+            noclasses=False, nowrap=True, encoding='utf-8')
     return _FORMATTERS[output_format]
 
 
