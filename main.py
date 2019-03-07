@@ -7,6 +7,8 @@ import pygments.lexers
 import pygments.util
 
 
+__version__ = '0.1.0 (pygments version %s)' % (pygments.__version__)
+
 flask_app = flask.Flask(__name__)
 
 
@@ -48,6 +50,11 @@ def handle_invalid_usage(error):
     response = flask.jsonify({'message': error.args[0]})
     response.status_code = 400
     return response
+
+
+@flask_app.route('/_api/version', methods=['GET'])
+def version():
+    return "Version %s\n" % __version__, 200
 
 
 @flask_app.route('/pygmentize', methods=['POST'])
