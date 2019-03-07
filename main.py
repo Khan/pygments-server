@@ -36,7 +36,7 @@ def _get_formatter(output_format, output_style):
 def _get_lexer(lang):
     if lang not in _LEXERS:
         _LEXERS[lang] = pygments.lexers.get_lexer_by_name(
-            lang, encoding='utf-8')
+            lang, encoding='utf-8', stripnl=False)
     return _LEXERS[lang]
 
 
