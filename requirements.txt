@@ -1,4 +1,4 @@
 Flask==0.12
 gunicorn==19.7.1
-Pygments==2.2.0
+Pygments==2.3.1
 jsx-lexer==0.0.5
